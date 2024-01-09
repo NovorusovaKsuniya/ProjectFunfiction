@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const Char = require("../models/character").Char;
 var User = require("./../models/user").User
+var checkAuth = require("./../middleware/checkAuth.js")
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {

@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Char  = require("../models/character").Char;
-var async = require("async")
+var async = require("async");
+const checkAuth = require('../middleware/checkAuth');
 
 
 // GET запрос по умолчанию
@@ -10,7 +11,7 @@ router.get('/', (req, res) => {
 });
 
 // Страница героев
-router.get('/:nick', async function(req, res, next) {
+router.get('/:nick', checkAuth,async function(req, res, next) {
     try {
       const [char, chars] = await Promise.all([
         Char.findOne({ nick: req.params.nick }),
