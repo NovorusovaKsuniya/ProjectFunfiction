@@ -26,7 +26,11 @@ app.use(session({
   saveUninitialized: true,
   store: MongoStore.create({mongoUrl: 'mongodb://127.0.0.1/funfiction'})
   }))
-  
+  app.use(function(req,res,next){
+    req.session.counter = req.session.counter +1 || 1
+    next()
+    })
+    
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
