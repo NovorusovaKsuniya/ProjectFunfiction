@@ -2,28 +2,16 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', async (req, res, next) => {
+  try {
+    const menu = await Tree.find({}, { _id: 0, title: 1, nick: 1 });
+    res.render('index', {
+      title: 'Express',
+      menu: menu
+    });
+  } catch (err) {
+    next(err);
+  }
 });
-router.get('/opr', function(req, res, next) {
-  res.render('ff', {
-  title: "Что такое Фанфик?",
-  picture: "images/Фан.jpg",
-  desc: "Фанфик - это произведение, созданное с использованием элементов другого произведения (персонажей, мира, сюжетных приёмов и способов), которое обычно написано поклонниками на некоммерческой основе и автор которого публично заявляет о том, что оно является фанфиком по отношению к другому произведению."
-  });
-  });
-  router.get('/hz', function(req, res, next) {
-    res.render('ff', {
-    title: "Каника",
-    picture: "images/Фвнфик_Хс.jpg",
-    desc: "Рассмотрим для примера фанфик 'Хранительница снов'. Автор Фанфика вдохновлялся мультсериалом 'Египтус', а Каника является придуманным главным персонажем. "
-    });
-  });
-  router.get('/zf', function(req, res, next) {
-    res.render('ff', {
-    title: "Кефер",
-    picture: "images/ЗФ.jpg",
-    desc: "Ещё один персонаж фанфика 'Хранительница снов'. Мудрый и справедливый правитель. Ему были доверены два ключа от портала между измерениями. Он является возлюбленным главной героини и играет важную роль."
-    });
-  });
+
 module.exports = router;

@@ -15,29 +15,17 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-sm bg-light navbar-light">
-            <div class="container-fluid">
+        <div class="container-fluid">
             <ul class="navbar-nav">
-            <li class="nav-item">
-            <a class="nav-link" href="/">Главная</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="/characs/WIF">Фанфики</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="/characs/Kefer">Кефер</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="/characs/Kanika">Каника</a>
-            </li>
+              <% menu.forEach(char => { %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/characs/<%= char.nick %>"><%= char.title %></a>
+                </li>
+              <% }) %>
             </ul>
-            <ul class="navbar-nav navbar-right">
-            <li>
-            <a class="nav-link" href="">Войти</a>
-            </li>
-            </ul>
-            </div>
-            </nav>            
-    <%- body %>
+          </div>
+        </nav>
+            <%- body %>
 </body>
 </html>
 <body>
