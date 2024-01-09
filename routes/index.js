@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const Char = require("../models/tree").Char;
+const Char = require("../models/character").Char;
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   try {
