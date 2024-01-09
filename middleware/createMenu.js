@@ -1,12 +1,10 @@
-const Char = require("./../models/character").Char;
+const db = require('./../mySQLConnect');
 
-module.exports = async function(req, res, next) {
-  try {
-    res.locals.nav = [];
-    const result = await Char.find({}, { _id: 0, title: 1, nick: 1 });
-    res.locals.nav = result;
-    next();
-  } catch (err) {
-    throw err;
-  }
+module.exports = function(req, res, next) {
+  res.locals.nav = [];
+  db.query('SELECT title, nick FROM fanf', function(err, result) {
+      if (err) throw err;
+      res.locals.nav = result;
+      next();
+  });
 };
