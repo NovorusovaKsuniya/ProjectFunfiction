@@ -27,6 +27,7 @@ router.get("/:nick", function(req, res, next) {
 // GET запрос по умолчанию
 router.get('/', (req, res) => {
   res.send('Новый маршрутизатор для маршрутов с персонажами');
+  
 });
 
 
