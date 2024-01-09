@@ -3,10 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mongoose = require('mongoose')
-mongoose.connect('mongodb://127.0.0.1/funfiction')
+//var mongoose = require('mongoose')
+//mongoose.connect('mongodb://127.0.0.1/funfiction')
 var session = require("express-session")
-var Char = require("./models/character").Char
+var mysql2 = require('mysql2/promise');
+var MySQLStore = require('express-mysql-session')(session);
+//var Char = require("./models/character").Char
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -14,23 +16,45 @@ var characs = require('./routes/characs');
 
 var app = express();
 
+var options = {
+  host : '127.0.0.1',
+  port: '3306',
+  user : 'root',
+  password : '1234',
+  database: 'fanfic'
+  };
+  var connection = mysql2.createPool(options)
+var sessionStore = new MySQLStore( options, connection);
+
 // view engine setup
 app.engine('ejs',require('ejs-locals'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-var MongoStore = require('connect-mongo');
-app.use(session({
-  secret: "Fanfic",
-  cookie:{maxAge:60*1000},
-  resave: true,
-  saveUninitialized: true,
-  store: MongoStore.create({mongoUrl: 'mongodb://127.0.0.1/funfiction'})
-  }))
+// var MongoStore = require('connect-mongo');
+// app.use(session({
+//   secret: "Fanfic",
+//   cookie:{maxAge:60*1000},
+//   resave: true,
+//   saveUninitialized: true,
+//   store: MongoStore.create({mongoUrl: 'mongodb://127.0.0.1/funfiction'})
+//   }))
+
   app.use(function(req,res,next){
     req.session.counter = req.session.counter +1 || 1
     next()
     })
+    app.use(session({
+      secret: 'Fanfic',
+      key: 'sid',
+      store: sessionStore,
+      resave: true,
+      saveUninitialized: true,
+      cookie: { path: '/',
+        httpOnly: true,
+        maxAge: 60*1000
+      }
+  }));
   
 app.use(require("./middleware/createMenu.js"))
 app.use(require("./middleware/createUser.js"))
