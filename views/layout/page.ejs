@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <!DOCTYPE html>
-    <html>
     <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -17,15 +14,16 @@
         <nav class="navbar navbar-expand-sm bg-light navbar-light">
         <div class="container-fluid">
             <ul class="navbar-nav">
-              <% menu.forEach(char => { %>
-                <li class="nav-item">
-                  <a class="nav-link" href="/characs/<%= char.nick %>"><%= char.title %></a>
-                </li>
-              <% }) %>
+                <% if(typeof nav == 'object' && nav){ nav.forEach(function(char){
+                    %>
+                    <li class="nav-item">
+                    <a class="nav-link"
+                    href="/characs/<%=char.nick%>"><%=char.title%></a>
+                    </li>
+                    <% })} %>
             </ul>
           </div>
         </nav>
             <%- body %>
 </body>
 </html>
-<body>

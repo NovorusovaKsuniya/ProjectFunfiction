@@ -34,7 +34,6 @@ router.get('/:nick', async function(req, res, next) {
       title: title,
       picture: picture,
       desc: desc,
-      menu: chars
     });
   }
 

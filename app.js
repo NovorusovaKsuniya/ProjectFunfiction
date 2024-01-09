@@ -6,6 +6,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1/funfiction')
 var session = require("express-session")
+var Char = require("./models/character").Char
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -30,13 +31,15 @@ app.use(session({
     req.session.counter = req.session.counter +1 || 1
     next()
     })
-    
+  
+app.use(require("./middleware/createMenu.js"))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+  
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/characs', characs);
