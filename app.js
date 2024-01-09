@@ -33,6 +33,7 @@ app.use(session({
     })
   
 app.use(require("./middleware/createMenu.js"))
+app.use(require("./middleware/createUser.js"))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
