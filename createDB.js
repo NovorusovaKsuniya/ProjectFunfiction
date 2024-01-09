@@ -8,9 +8,8 @@ try {
 await client.connect();
 var database = client.db("funfiction");
 database.dropDatabase()
-database = client.db("funfiction");
-const funf = database.collection("funf");
-const result = await funf.insertMany(data);
+const trees = database.collection("chars");
+const result = await trees.insertMany(data);
 console.log(`${result.insertedCount} documents were inserted`);
 } finally {
 await client.close();
