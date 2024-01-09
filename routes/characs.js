@@ -3,10 +3,10 @@ const router = express.Router();
 var db = require('../mySQLConnect.js');
 //const Char  = require("../models/character").Char;
 var async = require("async");
-//const checkAuth = require('../middleware/checkAuth');
+const checkAuth = require('../middleware/checkAuth');
 
 
-router.get("/:nick", function(req, res, next) {
+router.get("/:nick", checkAuth, function(req, res, next) {
   db.query(`SELECT * FROM fanf WHERE fanf.nick = '${req.params.nick}'`, (err, chars) => {
   if(err) {
     console.log(err);
@@ -27,7 +27,7 @@ router.get("/:nick", function(req, res, next) {
 // GET запрос по умолчанию
 router.get('/', (req, res) => {
   res.send('Новый маршрутизатор для маршрутов с персонажами');
-  
+
 });
 
 
