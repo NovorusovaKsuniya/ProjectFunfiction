@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 
-const userSchema = new mongoose.Schema({
+const schemaUser = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
@@ -21,17 +21,21 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-userSchema.virtual("password").set(function(password) {
-    this._purePassword = password;
-    this.salt = Math.random() + "";
-    this.hashedPassword = this.encryptPassword(password);
-  })
-  .get(function() {
-    return this._purePassword;
-  });
+schemaUser.virtual("password").set(async function(password) {
+  this._purePassword = password;
+  this.salt = Math.random() + "";
+  this.hashedPassword = this.encryptPassword(password);
+}).get(function() {
+  return this._purePassword;
+});
 
-userSchema.methods.encryptPassword = function(password) {
+schemaUser.methods.encryptPassword = function(password) {
   return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
 };
 
-module.exports.User = mongoose.model("User", userSchema);
+schemaUser.methods.checkPassword = function(password) {
+  const hashedPassword = crypto.createHmac('sha1', this.salt).update(password).digest('hex');
+  return this.hashedPassword === hashedPassword;
+};
+
+module.exports.User = mongoose.model("User", schemaUser);
