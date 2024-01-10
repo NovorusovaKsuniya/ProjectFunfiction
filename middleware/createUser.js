@@ -12,6 +12,6 @@ module.exports = function(req, res, next) {
     if (users.length > 0) {
       res.locals.user = users[0];
     }
-    next();
+    next( );
   });
 };
