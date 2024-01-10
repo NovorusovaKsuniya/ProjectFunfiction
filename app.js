@@ -21,7 +21,7 @@ var options = {
   port: '3306',
   user : 'root',
   password : '1234',
-  database: 'forest'
+  database: 'fanfic'
   };
 var connection = mysql2.createPool(options)
 var sessionStore = new MySQLStore( options, connection);
@@ -32,7 +32,7 @@ app.set('view engine', 'ejs');
 app.engine('ejs',require('ejs-locals'));
 
 app.use(session({
-    secret: 'Forest',
+    secret: 'Fanfic',
     key: 'sid',
     store: sessionStore,
     resave: true,
