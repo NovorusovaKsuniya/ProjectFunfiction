@@ -6,8 +6,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 //var mongoose = require('mongoose');
 var session = require("express-session")
-//var Tree = require("./models/tree").Tree
-//mongoose.connect('mongodb://127.0.0.1/forest');
+
 var mysql2 = require('mysql2/promise');
 var MySQLStore = require('express-mysql-session')(session);
 
@@ -23,7 +22,7 @@ var options = {
   port: '3306',
   user : 'root',
   password : '1234',
-  database: 'forest'
+  database: 'fanfic'
   };
 var connection = mysql2.createPool(options)
 var sessionStore = new MySQLStore( options, connection);
@@ -34,7 +33,7 @@ app.set('view engine', 'ejs');
 app.engine('ejs',require('ejs-locals'));
 
 app.use(session({
-    secret: 'Forest',
+    secret: 'Fanfic',
     key: 'sid',
     store: sessionStore,
     resave: true,

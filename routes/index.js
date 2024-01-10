@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//var User = require("../models/user").User
 var db = require('../mySQLConnect.js');
 
 
